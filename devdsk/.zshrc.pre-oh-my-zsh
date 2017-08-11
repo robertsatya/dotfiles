@@ -1,0 +1,52 @@
+source /apollo/env/envImprovement/var/zshrc
+
+export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
+
+for f in SDETools envImprovement AmazonAwsCli OdinTools; do
+    if [[ -d /apollo/env/$f ]]; then
+        export PATH=$PATH:/apollo/env/$f/bin
+    fi
+done
+
+export AUTO_TITLE_SCREENS="NO"
+
+export PROMPT="
+%{$fg[white]%}(%D %*) <%?> [%~] $program %{$fg[default]%}
+%{$fg[cyan]%}%m %#%{$fg[default]%} "
+
+export RPROMPT=
+
+set-title() {
+    echo -e "\e]0;$*\007"
+}
+
+ssh() {
+    set-title $*;
+    /usr/bin/ssh -2 $*;
+    set-title $HOST;
+}
+
+alias e=emacs
+alias bb=brazil-build
+
+alias bba='brazil-build apollo-pkg'
+alias bbr='brazil-build release'
+alias bbc='brazil-build clean'
+alias bbs='brazil-build server'
+alias bre='brazil-runtime-exec'
+alias brc='brazil-recursive-cmd'
+alias brcp='brazil-recursive-cmd-parallel -j 4'
+alias bws='brazil ws'
+alias bwsuse='bws use --gitMode -p'
+alias bwscreate='bws create -n'
+alias brc=brazil-recursive-cmd
+alias bbr='brc brazil-build'
+alias bball='brc --allPackages'
+alias bbb='brc --allPackages brazil-build'
+alias bbra='bbr apollo-pkg'
+alias bb32='BRAZIL_PLATFORM_OVERRIDE=RHEL5 /apollo/env/SDETools/bin/brazil-build'
+export JAVA_HOME=/apollo/env/JavaSE8/jdk1.8/bin
+#export PATH=$BRAZIL_CLI_BIN:$PATH
+export PATH=$JAVA_HOME:$PATH
+alias register_with_aaa='/apollo/env/AAAWorkspaceSupport/bin/register_with_aaa.py'
+alias cdw='cd /workplace/venaduri'
